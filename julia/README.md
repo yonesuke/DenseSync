@@ -13,7 +13,7 @@
     There are two ways to solve the problem:
 
     - First, you can directly solve the problem using mathematical optimization package [JuMP](https://github.com/jump-dev/JuMP.jl).
-    Function `max_connectivity(N,p)` will give you the numerical solution of the problem.
+    Function `max_connectivity(N,p)` give you the numerical solution of the problem.
     Inside the function, we use [Cbc](https://github.com/jump-dev/Cbc.jl) for the optimizer.
     For example, `max_connectivity(1900, 100)` will return a `DenseSync` struct.
     ```
@@ -29,14 +29,18 @@
     Function `exact_sol(N,p)` will give you the exact solution.
     The return value is a `DenseSync` struct.
 
-    
-
-```julia
-include("DenseSync.jl")
-```
-
 - [`ode.jl`](ode.jl)
 
+    It is important to check if the optimized network actually has an equilibrium point other than the in-phase solution.
+    Function `DenseSyncODE(ds::DenseSync, δt, tmax)` run the ODE
+    with the initial value randomly perturbed from `p`-twisted state
+    and track the distance.
+    Inside the function, Runge-Kutta method is used for solving the ODE,
+    and `δt` is the time-step and `tmax` is the maximum time.
+    For example, we run `DenseSyncODE(max_connectivity(1900, 100), 10^(-3), 4)`
+    for five times.
+    The time-dependence of the norm is plotted as follows.
+    It is well converged to `p`-twisted state, which implies that
+    the optimized network actually makes the `p`-twisted state stable!!
 
-
-![](ode.png)
+    ![](ode.png)

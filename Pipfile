@@ -7,6 +7,8 @@ name = "pypi"
 numpy = "*"
 matplotlib = "*"
 pulp = "*"
+jupyterlab = "*"
+hydra-core = "*"
 
 [dev-packages]
 

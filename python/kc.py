@@ -1,6 +1,7 @@
 import os
 import math
 import hydra
+import logging
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
@@ -24,10 +25,8 @@ def critical_index(N):
     return kc
 
 
-@hydra.main()
+@hydra.main(config_name="config")
 def plot_kc(cfg):
-    current_dir = hydra.utils.get_original_cwd()
-
     max_N=100
     eps = 10**(-8)
     xl, xr = 0.335, 0.345
@@ -60,8 +59,14 @@ def plot_kc(cfg):
     plt.legend(loc="upper right")
     plt.tight_layout()
 
-    os.makedirs(os.path.join(current_dir, "figs"), exist_ok=True)
-    plt.savefig(os.path.join(current_dir, "figs", "kc.png"), bbox_inches='tight')
+    current_dir = hydra.utils.get_original_cwd()
+    fig_dir = os.path.join(current_dir, cfg.hp.fig_dir)
+    path = os.path.join(fig_dir, "kc.png")
+
+    os.makedirs(fig_dir, exist_ok=True)
+    plt.savefig(path, bbox_inches='tight')
+
+    logging.info(f"Save the figure {path}")
 
 
 if __name__ == '__main__':

@@ -1,12 +1,12 @@
 import os
 import math
 import logging
+import hydra
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
 logging.basicConfig(level=logging.INFO)
-
 
 fig_dir = './figs'
 matplotlib.rc('text', usetex=True)
@@ -112,9 +112,8 @@ def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
     return np.array(ans)
 
 
-if __name__ == '__main__':
-
-    os.makedirs(fig_dir, exist_ok=True)
+@hydra.main(config_name="config")
+def plot_ode(cfg):
 
     m = 100
     N, p = 19*m, m
@@ -166,6 +165,15 @@ if __name__ == '__main__':
     ax2.set_ylabel(r"$\log\|\theta-\theta_{p}^{*}\|$", fontsize=fontsize)
     ax2.tick_params(axis='both', which='major', labelsize=fontsize)
 
+    current_dir = hydra.utils.get_original_cwd()
+    fig_dir = os.path.join(current_dir, cfg.hp.fig_dir)
+    os.makedirs(fig_dir, exist_ok=True)
+
     path = os.path.join(fig_dir, "ode.png")
     plt.savefig(path, bbox_inches='tight')
+
     logging.info(f"Save the figure {path}")
+
+
+if __name__ == '__main__':
+    plot_ode()

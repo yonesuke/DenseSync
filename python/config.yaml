@@ -1,0 +1,4 @@
+hp:
+  fig_dir: ./figs
+  result_dir: ./results
+  max_N: 100

@@ -17,6 +17,8 @@ pipenv install
 pipenv shell
 ```
 
+The instruction to generate figures of experiments is written in [python/README.md](python/README.md)
+
 ### Julia
 
-Please see [README.md](julia/README.md)
+Please see [julia/README.md](julia/README.md)

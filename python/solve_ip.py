@@ -54,13 +54,17 @@ def search(cfg):
     result_dir = os.path.join(current_dir, cfg.hp.result_dir)
     os.makedirs(os.path.join(result_dir, "base"), exist_ok=True)
 
+    csv_path = os.path.join(result_dir, f'results.csv')
+    with open(csv_path, 'w') as f:
+        f.write(f'N,p,r\n')
+
     for N in range(2, cfg.hp.max_N):
         for p in range(1, N):
             r, a = solve(N, p)
             logging.info(f"N={N},\tp={p},\tmax_connectivity={r:.3}")
 
-            with open(os.path.join(result_dir, f'all.log'), 'a') as f:
-                f.write(f'N={N},p={p},obj={r}\n')
+            with open(csv_path, 'a') as f:
+                f.write(f'{N},{p},{r}\n')
             
             #with open(os.path.join(result_dir, "base", f'N={N}_p={p}'), 'w') as f:
             #    for i in range(1, N):

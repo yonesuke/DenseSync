@@ -6,30 +6,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
+import functions as F
+
 logging.basicConfig(level=logging.INFO)
 
 fig_dir = './figs'
 matplotlib.rc('text', usetex=True)
 
-def b(x):
-    return -np.cos(x)*(1-np.cos(x))
-
-def critical_index(N):
-    xs = np.array([2*np.pi*l/N for l in range(1,N)])
-    ys = b(xs)
-    sk = np.cumsum(ys)
-    kc = np.argmax(sk>=0) + 1
-    return kc
-
-def additional_one(N, p):
-    m = math.gcd(N, p)
-    nt, pt = int(N/m), int(p/m)
-    xs = np.array([2*np.pi*l/nt for l in range(1,nt)])
-    ys = b(xs)
-    sk = np.cumsum(ys)
-    kc = np.argmax(sk>=0) + 1
-    additional = 2*math.ceil(-m*sk[kc-2]/ys[kc-1]-1)
-    return additional
 
 def optimal_Np(N, p):
     m = math.gcd(N, p)
@@ -46,7 +29,7 @@ def optimal_Np(N, p):
         logging.error("Tt does not support when m/p != 1")
         exit(1)
 
-    kc = critical_index(nt)
+    kc = F.critical_index(nt)
     xs = np.zeros(N)
     # step 1
     for i in range(m):
@@ -57,7 +40,7 @@ def optimal_Np(N, p):
     for i in range(1,m):
         xs[i*nt] = 1.0
     # step 3
-    additional = additional_one(N, p)
+    additional = F.additional_one(N, p)
     # first enumerate all the possible candidates
     candidates = []
     for i in range(m):
@@ -70,13 +53,16 @@ def optimal_Np(N, p):
         xs[N-candidates[i]] = 1.0
     return xs
 
+
 def vec_aij_fft(thetas, ys):
     es = np.exp(1j*thetas)
     return np.imag(np.conjugate(es)*np.fft.ifft(np.fft.fft(es)*ys))
 
+
 def distance_from_equilibrium(xs, x0):
     vec = np.mod(xs-x0, 2*np.pi)
     return np.linalg.norm(np.where(vec>np.pi, 2*np.pi-vec, vec))
+
 
 def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
     """ solve ode with vector field `v` and return timeseries of values recorded by function `rec`

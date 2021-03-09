@@ -11,10 +11,13 @@ logging.basicConfig(level=logging.INFO)
 
 def solve(N, p):
     """ solve an integer programming problem for finding a circulant network with maximum connectivity
+
     Parameters
     ----------
     N : int
-    p : int,
+      The number of nodes
+    p : int
+      p-twisted state
     """
 
     problem = pulp.LpProblem('GraphSync', pulp.LpMaximize)

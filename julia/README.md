@@ -16,6 +16,7 @@
     Function `max_connectivity(N,p)` give you the numerical solution of the problem.
     Inside the function, we use [Cbc](https://github.com/jump-dev/Cbc.jl) for the optimizer.
     For example, `max_connectivity(1900, 100)` will return a `DenseSync` struct.
+    
     ```
     DenseSync{
      system size: 1900, p-twisted state: 100, 

@@ -9,6 +9,7 @@ matplotlib = "*"
 pulp = "*"
 jupyterlab = "*"
 hydra-core = "*"
+pandas = "*"
 
 [dev-packages]
 

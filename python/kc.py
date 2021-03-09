@@ -6,23 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
+import functions as F
+
 matplotlib.rc('text', usetex=True)
-
-
-def t(x):
-    return 4*np.pi*x-4*np.sin(2*np.pi*x)+np.sin(4*np.pi*x)
-
-
-def f(x):
-    return -np.cos(x)*(1-np.cos(x))
-
-
-def critical_index(N):
-    xs = np.array([2*np.pi*l/N for l in range(1,N)])
-    ys = f(xs)
-    sk = np.cumsum(ys)
-    kc = np.argmax(sk>=0) + 1
-    return kc
 
 
 @hydra.main(config_name="config")
@@ -32,17 +18,16 @@ def plot_kc(cfg):
     xl, xr = 0.335, 0.345
     while (xr-xl)>eps:
         xm = (xl + xr) * 0.5
-        if t(xm)>0:
+        if F.t(xm)>0:
             xr = xm
         else:
             xl = xm
     Kc = xl
 
-
     a = (1/6+np.sqrt(3)/4)*np.pi
 
     ns = np.array([i for i in range(7, max_N+1)])
-    kcs = np.array([critical_index(n)/n for n in ns])
+    kcs = np.array([F.critical_index(n)/n for n in ns])
     maxs = np.array([Kc+0.5/n+a/n/n for n in ns])
     sups = np.array([np.ceil(Kc*n-0.5+a/n)/n for n in ns])
 

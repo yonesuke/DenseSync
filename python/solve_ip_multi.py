@@ -1,4 +1,5 @@
 import os
+import math
 import pulp
 import logging
 import hydra
@@ -60,7 +61,7 @@ def search(cfg):
     _N = cfg.hp.max_N + 1
     for i in range(2, _N, n_div):
         Ns = np.arange(i, min(i + n_div, _N))
-        results = Parallel(n_jobs=4, verbose=10)([delayed(solve)(N, p) for N in Ns for p in range(1, N)])
+        results = Parallel(n_jobs=4, verbose=10)([delayed(solve)(N, p) for N in Ns for p in range(1, math.floor(N/2))])
 
         for (N, p, r, a) in results:
             with open(csv_path, 'a') as f:

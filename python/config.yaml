@@ -2,7 +2,7 @@
 hp:
   fig_dir: ./figs
   result_dir: ./results
-  max_N: 1000
+  max_N: 600
 
 ode_plot:
   N: 1900

@@ -9,7 +9,7 @@ You need to execute either one.
 + single processing ver.
 
 ```
-python solve_ip.py -m hp.max_N=1000
+python solve_ip.py -m hp.max_N=600
 ```
 
 + multi processing ver.
@@ -17,7 +17,7 @@ python solve_ip.py -m hp.max_N=1000
 This program is faster than single processing ver.
 
 ```
-python solve_ip_multi.py -m hp.max_N=1000
+python solve_ip_multi.py -m hp.max_N=600
 ```
 
 

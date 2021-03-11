@@ -10,9 +10,6 @@ import functions as F
 
 logging.basicConfig(level=logging.INFO)
 
-fig_dir = './figs'
-matplotlib.rc('text', usetex=True)
-
 
 def optimal_Np(N, p):
     m = math.gcd(N, p)
@@ -26,7 +23,7 @@ def optimal_Np(N, p):
         exit(1)
 
     if pt != 1:
-        logging.error("Tt does not support when m/p != 1")
+        logging.error("There is no support when m/p != 1")
         exit(1)
 
     kc = F.critical_index(nt)

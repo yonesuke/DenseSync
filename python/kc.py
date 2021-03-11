@@ -8,8 +8,6 @@ import matplotlib
 
 import functions as F
 
-matplotlib.rc('text', usetex=True)
-
 
 @hydra.main(config_name="config")
 def plot_kc(cfg):

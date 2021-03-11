@@ -27,6 +27,7 @@ def critical_index(N):
     Parameters
     ----------
     N: int
+      The number of oscillators
     """
 
     xs = np.array([2*np.pi*l/N for l in range(1,N)])
@@ -41,7 +42,9 @@ def additional_one(N, p):
     Parameters
     ----------
     N: int
+      The number of oscillators
     p: int
+      p-twisted state
     """
 
     m = math.gcd(N, p)

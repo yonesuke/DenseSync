@@ -8,7 +8,7 @@ import matplotlib
 
 import functions as F
 
-plt.rcParams['font.size']=28
+plt.rcParams['font.size'] = 28
 
 
 @hydra.main(config_name="config")

@@ -6,7 +6,6 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 
-matplotlib.rc('text', usetex=True)
 plt.rcParams["font.size"] = 20
 
 

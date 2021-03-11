@@ -97,9 +97,8 @@ def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
 
 @hydra.main(config_name="config")
 def plot_ode(cfg):
-
-    m = 100
-    N, p = 19*m, m
+    N = cfg.ode_plot.N
+    p = cfg.ode_plot.p
 
     # optimal network
     xs = optimal_Np(N, p)

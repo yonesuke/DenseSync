@@ -49,7 +49,7 @@ python sup_m.py
 ### Figure 5
 
 ```
-python odeplot.py
+python odeplot.py -m ode_plot.N=1900 ode_plot.p=100
 ```
 
 ### Figure 6

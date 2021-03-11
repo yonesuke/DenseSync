@@ -12,6 +12,13 @@ plt.rcParams['font.size'] = 20
 
 
 def sup_m(N):
+    """ Computation of eq. (46)
+
+    Parameters
+    ----------
+    N: int
+      the number of oscillators
+    """
     xs = np.array([2*np.pi*l/N for l in range(1,N)])
     ys = F.b(xs)
     sk = np.cumsum(ys)

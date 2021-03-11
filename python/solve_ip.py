@@ -4,19 +4,16 @@ import logging
 import hydra
 import numpy as np
 
-result_dir = './results'
-max_N = 100
-
 logging.basicConfig(level=logging.INFO)
 
 
-def solve(N, p):
+def solve(N, p, eps=1e-5):
     """ solve an integer programming problem for finding a circulant network with maximum connectivity
 
     Parameters
     ----------
     N : int
-      The number of nodes
+      The number of oscillators
     p : int
       p-twisted state
 
@@ -35,7 +32,6 @@ def solve(N, p):
     problem += 1.0/(N-1) * pulp.lpSum(a[i] for i in range(1, N))
     
     # eigenvalue constraint
-    eps = 10**(-5)
     for r in range(1, N):
         problem += (pulp.lpSum(a[s]*np.cos(p*2.0*np.pi*s/N)*(-1.0+np.cos(r*2.0*np.pi*s/N)) for s in range(1, N)) <= -eps)
 

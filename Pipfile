@@ -10,6 +10,7 @@ pulp = "*"
 jupyterlab = "*"
 hydra-core = "*"
 pandas = "*"
+joblib = "*"
 
 [dev-packages]
 

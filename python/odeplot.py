@@ -99,6 +99,8 @@ def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
 def plot_ode(cfg):
     N = cfg.ode_plot.N
     p = cfg.ode_plot.p
+    cmap = plt.get_cmap("tab10")
+    color = cmap(0)
 
     # optimal network
     xs = optimal_Np(N, p)
@@ -109,40 +111,46 @@ def plot_ode(cfg):
     for i in range(1,N):
         lambda_p += xs[i]*np.cos(p*2.0*np.pi*i/N)*(-1.0+np.cos(p*2.0*np.pi*i/N))
 
-    # initial condition
-    # theta0: equilibrium point
-    # thetas: initial phases
-    # mean of noises is shifted to zero
-    # in order to avoid global rotation
-    theta0 = np.mod(np.array([2*np.pi*p*i/N for i in range(N)]), 2*np.pi)
-    noises = np.random.normal(scale = 0.1*np.pi/np.sqrt(N), size = N)
-    noises -= noises.mean()
-    thetas = theta0 + noises
-
-    dt, tmax = 0.001, 4
-    distances = runge_kutta(thetas, dt, tmax, vec_aij_fft, [xs_fft], distance_from_equilibrium, [theta0])
-
     plt.figure(figsize=(8, 6), tight_layout=True)
     fig, ax1 = plt.subplots()
     left, bottom, width, height = [0.4, 0.4, 0.4, 0.4]
     ax2 = fig.add_axes([left, bottom, width, height])
     plt.rcParams['font.size']=28
-    ts = np.arange(0, tmax, dt)
 
-    fontsize = 20
-    # ax1
+    dt, tmax = 0.001, 4
+    ts = np.arange(0, tmax, dt)
+    n_plots = 5
+    for plot_i in range(n_plots):
+        # initial condition
+        # theta0: equilibrium point
+        # thetas: initial phases
+        # mean of noises is shifted to zero
+        # in order to avoid global rotation
+        theta0 = np.mod(np.array([2*np.pi*p*i/N for i in range(N)]), 2*np.pi)
+        noises = np.random.normal(scale = 0.1*np.pi/np.sqrt(N), size = N)
+        noises -= noises.mean()
+        thetas = theta0 + noises
+
+        distances = runge_kutta(thetas, dt, tmax, vec_aij_fft, [xs_fft], distance_from_equilibrium, [theta0])
+
+        fontsize = 20
+        # ax1
+        ax1.plot(ts, distances, c=color)
+
+        # ax2
+        ax2.plot(ts,np.log(distances), c=color)
+
+
     ax1.set_xlim(-dt,tmax)
     ax1.set_ylim(0, 0.2)
-    ax1.plot(ts, distances)
     ax1.set_xlabel(r"$t$", fontsize=fontsize)
     ax1.set_ylabel(r"$\| \theta - \theta_{p}^{*} \|$", fontsize=fontsize)
     ax1.tick_params(axis='both', which='major', labelsize=fontsize)
 
-    # ax2
-    ax2.set_xlim(-dt, tmax)
-    ax2.plot(ts,np.log(distances))
+
     ax2.plot(ts,-5 + lambda_p*ts, linestyle="dashed", label="$e^{\lambda_p t}+\mathrm{const.}$")
     ax2.legend(fontsize=fontsize)
+    ax2.set_xlim(-dt, tmax)
     ax2.set_xlabel(r"$t$", fontsize=fontsize)
     ax2.set_ylabel(r"$\log\|\theta-\theta_{p}^{*}\|$", fontsize=fontsize)
     ax2.tick_params(axis='both', which='major', labelsize=fontsize)

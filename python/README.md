@@ -28,11 +28,15 @@ The graph of the maximum connectivity and the number of oscillators `N` is plott
 python max_connectivity.py
 ```
 
+![](figs/figure1.png)
+
 ### Figure 2
 
 ```
 python n60p1.py
 ```
+
+![](figs/N60p1.png)
 
 ### Figure 3
 
@@ -40,11 +44,15 @@ python n60p1.py
 python n180p3.py
 ```
 
+![](figs/N180p3.png)
+
 ### Figure 4
 
 ```
 python sup_m.py
 ```
+
+![](figs/sup_m.png)
 
 ### Figure 5
 
@@ -52,8 +60,12 @@ python sup_m.py
 python odeplot.py -m ode_plot.N=1900 ode_plot.p=100
 ```
 
+![](figs/ode.png)
+
 ### Figure 6
 
 ```
 python kc.py
 ```
+
+![](figs/kc.png)

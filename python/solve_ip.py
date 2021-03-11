@@ -57,7 +57,7 @@ def search(cfg):
         f.write(f'N,p,r\n')
 
     for N in range(2, cfg.hp.max_N + 1):
-        for p in range(1, math.floor(N/2)):
+        for p in range(1, math.floor(N/2) + 1):
             r, a = solve(N, p)
             logging.info(f"N={N},\tp={p},\tmax_connectivity={r:.3}")
 

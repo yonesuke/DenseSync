@@ -35,8 +35,9 @@ def solve(N, p):
     problem += 1.0/(N-1) * pulp.lpSum(a[i] for i in range(1, N))
     
     # eigenvalue constraint
+    eps = 10**(-5)
     for r in range(1, N):
-        problem += (pulp.lpSum(a[s]*np.cos(p*2.0*np.pi*s/N)*(-1.0+np.cos(r*2.0*np.pi*s/N)) for s in range(1, N)) <= 0)
+        problem += (pulp.lpSum(a[s]*np.cos(p*2.0*np.pi*s/N)*(-1.0+np.cos(r*2.0*np.pi*s/N)) for s in range(1, N)) <= -eps)
 
     # symmetric constraint
     for i in range(1, int(np.floor((N+1)/2))):

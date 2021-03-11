@@ -56,17 +56,20 @@ def search(cfg):
     with open(csv_path, 'w') as f:
         f.write(f'N,p,r\n')
 
-    Ns = range(2, cfg.hp.max_N)
-    results = Parallel(n_jobs=4, verbose=10)([delayed(solve)(N, p) for N in Ns for p in range(1, N)])
+    n_div = 50
+    _N = cfg.hp.max_N + 1
+    for i in range(2, _N, n_div):
+        Ns = np.arange(i, min(i + n_div, _N))
+        results = Parallel(n_jobs=4, verbose=10)([delayed(solve)(N, p) for N in Ns for p in range(1, N)])
 
-    for (N, p, r, a) in results:
-        with open(csv_path, 'a') as f:
-            f.write(f'{N},{p},{r}\n')
-
-        #with open(os.path.join(result_dir, "base", f'N={N}_p={p}'), 'w') as f:
-        #    for i in range(1, N):
-        #        f.write(f'{int(a[i].value())} ')
-        #    f.write('\n')
+        for (N, p, r, a) in results:
+            with open(csv_path, 'a') as f:
+                f.write(f'{N},{p},{r}\n')
+    
+            #with open(os.path.join(result_dir, "base", f'N={N}_p={p}'), 'w') as f:
+            #    for i in range(1, N):
+            #        f.write(f'{int(a[i].value())} ')
+            #    f.write('\n')
 
 
 if __name__ == '__main__':

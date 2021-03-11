@@ -2,16 +2,17 @@
 
 ### Figure 1
 
-[`solve_ip.py`](solve_ip.py) and [`solve_ip_multi.py](solve_ip_multi.py) are solving an integer programming problem (Problem 1 in the paper).
+[`solve_ip.py`](solve_ip.py) and [`solve_ip_multi.py`](solve_ip_multi.py) are solving an integer programming problem (Problem 1 in the paper).
+
 You need to execute either one.
 
-#### 1. single processing ver.
++ single processing ver.
 
 ```
 python solve_ip.py -m hp.max_N=1000
 ```
 
-#### 2. multi processing ver.
++ multi processing ver.
 
 This program is faster than single processing ver.
 

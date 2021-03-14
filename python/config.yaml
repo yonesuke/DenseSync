@@ -1,0 +1,9 @@
+# common hyperparameters
+hp:
+  fig_dir: ./figs
+  result_dir: ./results
+  max_N: 600
+
+ode_plot:
+  N: 1900
+  p: 100

@@ -1,20 +1,20 @@
-import os
-import math
 import logging
-import hydra
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
+import math
+import os
 
 import functions as F
+import hydra
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 
 logging.basicConfig(level=logging.INFO)
 
 
 def optimal_Np(N, p):
     m = math.gcd(N, p)
-    nt, pt = int(N/m), int(p/m)
-    
+    nt, pt = int(N / m), int(p / m)
+
     logging.info(f"N/m = {nt}")
     logging.info(f"p/m = {pt}")
 
@@ -30,40 +30,40 @@ def optimal_Np(N, p):
     xs = np.zeros(N)
     # step 1
     for i in range(m):
-        for j in range(1,kc):
-            xs[i*nt+j] = 1.0
-            xs[i*nt+nt-kc+j] = 1.0
+        for j in range(1, kc):
+            xs[i * nt + j] = 1.0
+            xs[i * nt + nt - kc + j] = 1.0
     # step 2
-    for i in range(1,m):
-        xs[i*nt] = 1.0
+    for i in range(1, m):
+        xs[i * nt] = 1.0
     # step 3
     additional = F.additional_one(N, p)
     # first enumerate all the possible candidates
     candidates = []
     for i in range(m):
-        candidates.append(i*nt+kc)
-        candidates.append((i+1)*nt-kc)
-    for i in range(int(additional/2)):
+        candidates.append(i * nt + kc)
+        candidates.append((i + 1) * nt - kc)
+    for i in range(int(additional / 2)):
         # additionally select from left to right
         xs[candidates[i]] = 1.0
-        # also, don't forget to satisfy 
-        xs[N-candidates[i]] = 1.0
+        # also, don't forget to satisfy
+        xs[N - candidates[i]] = 1.0
     return xs
 
 
 def vec_aij_fft(thetas, ys):
-    es = np.exp(1j*thetas)
-    return np.imag(np.conjugate(es)*np.fft.ifft(np.fft.fft(es)*ys))
+    es = np.exp(1j * thetas)
+    return np.imag(np.conjugate(es) * np.fft.ifft(np.fft.fft(es) * ys))
 
 
 def distance_from_equilibrium(xs, x0):
-    vec = np.mod(xs-x0, 2*np.pi)
-    return np.linalg.norm(np.where(vec>np.pi, 2*np.pi-vec, vec))
+    vec = np.mod(xs - x0, 2 * np.pi)
+    return np.linalg.norm(np.where(vec > np.pi, 2 * np.pi - vec, vec))
 
 
 def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
-    """ solve ode with vector field `v` and return timeseries of values recorded by function `rec`
-    
+    """solve ode with vector field `v` and return timeseries of values recorded by function `rec`
+
     Parameters
     ----------
     x0 : numpy array
@@ -81,7 +81,7 @@ def runge_kutta(x0, dt, tmax, v, args_v, rec, args_rec):
     args_rec : list
       arguments of `rec` other than input unknown function
     """
-    loops = int(tmax/dt)
+    loops = int(tmax / dt)
     x_now = x0.copy()
     ans = []
     for _ in range(loops):
@@ -108,14 +108,18 @@ def plot_ode(cfg):
 
     # maximum eigenvalue
     lambda_p = 0
-    for i in range(1,N):
-        lambda_p += xs[i]*np.cos(p*2.0*np.pi*i/N)*(-1.0+np.cos(p*2.0*np.pi*i/N))
+    for i in range(1, N):
+        lambda_p += (
+            xs[i]
+            * np.cos(p * 2.0 * np.pi * i / N)
+            * (-1.0 + np.cos(p * 2.0 * np.pi * i / N))
+        )
 
     plt.figure(figsize=(8, 6), tight_layout=True)
     fig, ax1 = plt.subplots()
     left, bottom, width, height = [0.4, 0.4, 0.4, 0.4]
     ax2 = fig.add_axes([left, bottom, width, height])
-    plt.rcParams['font.size']=28
+    plt.rcParams["font.size"] = 28
 
     dt, tmax = 0.001, 4
     ts = np.arange(0, tmax, dt)
@@ -126,44 +130,49 @@ def plot_ode(cfg):
         # thetas: initial phases
         # mean of noises is shifted to zero
         # in order to avoid global rotation
-        theta0 = np.mod(np.array([2*np.pi*p*i/N for i in range(N)]), 2*np.pi)
-        noises = np.random.normal(scale = 0.1*np.pi/np.sqrt(N), size = N)
+        theta0 = np.mod(np.array([2 * np.pi * p * i / N for i in range(N)]), 2 * np.pi)
+        noises = np.random.normal(scale=0.1 * np.pi / np.sqrt(N), size=N)
         noises -= noises.mean()
         thetas = theta0 + noises
 
-        distances = runge_kutta(thetas, dt, tmax, vec_aij_fft, [xs_fft], distance_from_equilibrium, [theta0])
+        distances = runge_kutta(
+            thetas, dt, tmax, vec_aij_fft, [xs_fft], distance_from_equilibrium, [theta0]
+        )
 
         fontsize = 20
         # ax1
         ax1.plot(ts, distances, c=color)
 
         # ax2
-        ax2.plot(ts,np.log(distances), c=color)
+        ax2.plot(ts, np.log(distances), c=color)
 
-
-    ax1.set_xlim(-dt,tmax)
+    ax1.set_xlim(-dt, tmax)
     ax1.set_ylim(0, 0.2)
     ax1.set_xlabel(r"$t$", fontsize=fontsize)
     ax1.set_ylabel(r"$\| \theta - \theta_{p}^{*} \|$", fontsize=fontsize)
-    ax1.tick_params(axis='both', which='major', labelsize=fontsize)
+    ax1.tick_params(axis="both", which="major", labelsize=fontsize)
 
-
-    ax2.plot(ts,-5 + lambda_p*ts, linestyle="dashed", label="$e^{\lambda_p t}+\mathrm{const.}$")
+    ax2.plot(
+        ts,
+        -5 + lambda_p * ts,
+        linestyle="dashed",
+        label="$e^{\lambda_p t}+\mathrm{const.}$",
+    )
     ax2.legend(fontsize=fontsize)
     ax2.set_xlim(-dt, tmax)
     ax2.set_xlabel(r"$t$", fontsize=fontsize)
     ax2.set_ylabel(r"$\log\|\theta-\theta_{p}^{*}\|$", fontsize=fontsize)
-    ax2.tick_params(axis='both', which='major', labelsize=fontsize)
+    ax2.tick_params(axis="both", which="major", labelsize=fontsize)
 
     current_dir = hydra.utils.get_original_cwd()
     fig_dir = os.path.join(current_dir, cfg.hp.fig_dir)
     os.makedirs(fig_dir, exist_ok=True)
 
     path = os.path.join(fig_dir, "ode.png")
-    plt.savefig(path, bbox_inches='tight')
+    plt.savefig(path, bbox_inches="tight")
 
     logging.info(f"Save the figure {path}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     plot_ode()

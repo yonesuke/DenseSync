@@ -1,5 +1,7 @@
 # The lower bound of the network connectivity guaranteeing in-phase synchronization
 
+[arxiv](https://arxiv.org/abs/2104.05954)
+
 ## Setup
 
 ### python

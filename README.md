@@ -1,4 +1,4 @@
-# Finding dense networks that do not synchronize by integer programming
+# The lower bound of the network connectivity guaranteeing in-phase synchronization
 
 ## Setup
 

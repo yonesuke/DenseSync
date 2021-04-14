@@ -8,21 +8,21 @@ You need to execute either one.
 
 + single processing ver.
 
-```
-python solve_ip.py -m hp.max_N=600
-```
+    ```
+    python solve_ip.py -m hp.max_N=600
+    ```
 
 + multi processing ver.
 
-This program is faster than single processing ver.
+    This program is faster than single processing ver.
 
-```
-python solve_ip_multi.py -m hp.max_N=600
-```
+    ```
+    python solve_ip_multi.py -m hp.max_N=600
+    ```
 
 
-After the execution is finished, the result is saved as `./results/results.csv`.
-The graph of the maximum connectivity and the number of oscillators `N` is plotted by below commnad.
+After the execution, the maximum connectivity for each N and p is saved as `./results/results.csv`.
+The graph of the maximum connectivity and the number of oscillators is plotted by the below command.
 
 ```
 python max_connectivity.py

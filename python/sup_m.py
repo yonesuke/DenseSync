@@ -12,7 +12,7 @@ plt.rcParams['font.size'] = 20
 
 
 def sup_m(N):
-    """ Computation of eq. (46)
+    """ Computation of Eq. (39), a_{\widetilde{N}} / \widetilde{N}
 
     Parameters
     ----------

@@ -14,17 +14,21 @@ def solve(N, p, eps=1e-5):
 
     Parameters
     ----------
-    N : int
+    N: int
       The number of oscillators
-    p : int
-      p-twisted state
+    p: int
+      The p-twisted state
 
     Returns
     -------
+    N: int
+      The number of oscillators
+    p: int
+      The p-twisted state
     result: float
-      An objective value after solving
-    a: 
-      a base after solving
+      An objective value after solving the integer programming problem
+    a: A dictionary of LP Variables
+      A base after solving
     """
 
     problem = pulp.LpProblem('GraphSync', pulp.LpMaximize)

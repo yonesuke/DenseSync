@@ -21,9 +21,10 @@ def solve(N, p, eps=1e-5):
     Returns
     -------
     result: float
-      An objective value after solving
-    a: 
-      a base after solving
+      An objective value after solving the integer programming problem
+    a: A dictionary of LP Variables
+      A base after solving
+
     """
 
     problem = pulp.LpProblem('GraphSync', pulp.LpMaximize)

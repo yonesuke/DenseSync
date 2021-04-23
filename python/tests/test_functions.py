@@ -31,11 +31,11 @@ class TestFunctions(TestCase):
         """see Figure 6.
         """
         # p8
-        Kc = 0.34046
+        Kc = 0.3404614162445069
 
         self.assertEqual(critical_index(8)/8, 0.375) 
 
-        for N in range(5, 1000):
+        for N in range(5, 2000):
             target = critical_index(N)/N
 
             # Eq. (A19)

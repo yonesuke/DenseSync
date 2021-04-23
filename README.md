@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 2. use `pipenv`
 ```
-pipenv install
+pipenv install --python 3.8
 pipenv shell
 ```
 

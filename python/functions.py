@@ -13,8 +13,18 @@ def b(x):
     return -np.cos(x) * (1 - np.cos(x))
 
 
+def db(x):
+    """db(x)/dx
+
+    Parameters
+    ----------
+    x: numpy array (float)
+    """
+    return np.sin(x) - 2 * np.sin(x) * np.cos(x)
+
+
 def t(x):
-    """eq. (A2)
+    """Right hand side of eq. (A4)
 
     Parameters
     ----------
@@ -24,7 +34,8 @@ def t(x):
 
 
 def critical_index(N):
-    """
+    """Return an index that the sum is not exceeded when p=1 (Figure 2.)
+
     Parameters
     ----------
     N: int

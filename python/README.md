@@ -69,3 +69,20 @@ python kc.py
 ```
 
 ![](figs/kc.png)
+
+
+
+## For developer
+
+After you have finished editing the python files, please execute the following command.
+
+```
+pysen run lint
+pysen run format
+```
+
+## Tests
+
+```
+python -m unittest discover tests
+```

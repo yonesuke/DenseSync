@@ -25,7 +25,7 @@ def plot(cfg):
     plt.plot(_xs, _ys, color="gray", linewidth=1, zorder=1)
     plt.plot([0, m * 2 * np.pi], [0, 0], linestyle="dashed", color="gray", zorder=0)
 
-    kc = F.critical_index(nt)
+    kc, ys, sk = F.critical_index(nt)
     colors = ["white" for _ in range(1, N)]
 
     # kcまでを塗る

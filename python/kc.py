@@ -11,21 +11,14 @@ import numpy as np
 
 @hydra.main(config_name="config")
 def plot_kc(cfg):
-    max_N = 100
-    eps = 10 ** (-8)
-    xl, xr = 0.335, 0.345
-    while (xr - xl) > eps:
-        xm = (xl + xr) * 0.5
-        if F.t(xm) > 0:
-            xr = xm
-        else:
-            xl = xm
-    Kc = xl
+    max_N = cfg.kc.max_N
+
+    Kc = F.binary_search(f=F.t, xl=0.335, xr=0.345, eps=1e-8)
 
     a = (1 / 6 + np.sqrt(3) / 4) * np.pi
 
     ns = np.array([i for i in range(7, max_N + 1)])
-    kcs = np.array([F.critical_index(n) / n for n in ns])
+    kcs = np.array([F.critical_index(n)[0] / n for n in ns])
     maxs = np.array([Kc + 0.5 / n + a / n / n for n in ns])
     sups = np.array([np.ceil(Kc * n - 0.5 + a / n) / n for n in ns])
 

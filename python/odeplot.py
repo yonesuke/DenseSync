@@ -26,7 +26,7 @@ def optimal_Np(N, p):
         logging.error("There is no support when m/p != 1")
         exit(1)
 
-    kc = F.critical_index(nt)
+    kc, ys, sk = F.critical_index(nt)
     xs = np.zeros(N)
     # step 1
     for i in range(m):

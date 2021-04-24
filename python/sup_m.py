@@ -11,36 +11,14 @@ import numpy as np
 plt.rcParams["font.size"] = 20
 
 
-def sup_m(N):
-    """Computation of Eq. (39), a_{\widetilde{N}} / \widetilde{N}
-
-    Parameters
-    ----------
-    N: int
-      the number of oscillators
-    """
-    xs = np.array([2 * np.pi * l / N for l in range(1, N)])
-    ys = F.b(xs)
-    sk = np.cumsum(ys)
-    kc = np.argmax(sk >= 0) + 1
-    return (2 * kc - 1 - 2 * sk[kc - 2] / ys[kc - 1]) / N
-
-
 @hydra.main(config_name="config")
 def plot_sup_m(cfg):
-    max_N = 100
-    eps = 10 ** (-8)
-    xl, xr = 0.335, 0.345
-    while (xr - xl) > eps:
-        xm = (xl + xr) * 0.5
-        if F.t(xm) > 0:
-            xr = xm
-        else:
-            xl = xm
-    Kc = xl
+    max_N = cfg.sup_m.max_N
+
+    Kc = F.binary_search(f=F.t, xl=0.335, xr=0.345, eps=1e-8)
 
     ns = [i for i in range(7, max_N + 1)]
-    ss = [sup_m(n) for n in ns]
+    ss = [F.sup_m(n) for n in ns]
 
     plt.figure(figsize=[8, 6])
     plt.xlim(7, max_N)

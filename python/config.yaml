@@ -7,3 +7,10 @@ hp:
 ode_plot:
   N: 1900
   p: 100
+
+sup_m:
+  max_N: 100
+
+
+kc:
+  max_N: 100

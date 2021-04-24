@@ -5,7 +5,6 @@ import numpy as np
 
 class TestFunctions(TestCase):
 
-
     def test_b(self):
         self.assertAlmostEqual(b(0.0), 0.0)
         self.assertAlmostEqual(b(np.pi / 2), 0.0)
@@ -33,10 +32,10 @@ class TestFunctions(TestCase):
         # p8
         Kc = 0.3404614162445069
 
-        self.assertEqual(critical_index(8)/8, 0.375) 
+        self.assertEqual(critical_index(8)[0] / 8, 0.375) 
 
         for N in range(5, 2000):
-            target = critical_index(N)/N
+            target = critical_index(N)[0] / N
 
             # Eq. (A19)
             self.assertLessEqual(
@@ -49,4 +48,4 @@ class TestFunctions(TestCase):
                 Kc + 1.0 / (2 * N) + 2 * np.pi / (3 * N ** 2))
 
         # N=19, kc=6 (Eq (43), p6)
-        self.assertLessEqual(critical_index(19), 6)
+        self.assertLessEqual(critical_index(19)[0], 6)

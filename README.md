@@ -1,6 +1,7 @@
 # The lower bound of the network connectivity guaranteeing in-phase synchronization
 
 [![arXiv](https://img.shields.io/badge/arXiv-2104.05954-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2104.05954)
+
 [![test](https://github.com/yonesuke/DenseSync/actions/workflows/ci.yml/badge.svg)](https://github.com/yonesuke/DenseSync/actions/workflows/ci.yml)
 
 ## Setup

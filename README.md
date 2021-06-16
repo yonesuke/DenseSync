@@ -1,6 +1,6 @@
 # The lower bound of the network connectivity guaranteeing in-phase synchronization
 
-[![arXiv](https://img.shields.io/badge/arXiv-2104.05954-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2104.05954)
+[![DOI:10.1063/5.0054271](http://img.shields.io/badge/DOI-10.1063/5.0054271-B31B1B.svg)](https://doi.org/10.1063/5.0054271)
 
 ## Setup
 
@@ -24,3 +24,21 @@ The instruction to generate figures of experiments is written in [python/README.
 ### Julia
 
 Please see [julia/README.md](julia/README.md)
+
+## Citation
+If you use the code in a publication, please cite our Chaos paper:
+```tex
+@article{Yoneda2021,
+  doi = {10.1063/5.0054271},
+  url = {https://doi.org/10.1063/5.0054271},
+  year = {2021},
+  month = jun,
+  publisher = {{AIP} Publishing},
+  volume = {31},
+  number = {6},
+  pages = {063124},
+  author = {Ryosuke Yoneda and Tsuyoshi Tatsukawa and Jun-nosuke Teramae},
+  title = {The lower bound of the network connectivity guaranteeing in-phase synchronization},
+  journal = {Chaos: An Interdisciplinary Journal of Nonlinear Science}
+}
+```
